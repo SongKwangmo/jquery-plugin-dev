@@ -12,10 +12,9 @@
 	<!-- <link rel="stylesheet" href="/lib/datepicker/css/datepicker.css" media="all"> -->
 	<script type="text/javascript" src="../../resource/jquery-1.11.3/jquery-1.11.3.min.js"></script>
 	
-	<!--
+	
 	<script type="text/javascript" src="../../resource/jquery-validation/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="../../resource/jquery-validation/localization/messages_ko.js"></script>
--->
 
 	<script type="text/javascript" src="../../dist/jquery-validation-control/jquery.validation.control.js"></script>
 </head>
@@ -46,6 +45,10 @@
 			<label>Input2</label>
 			<input type="text" class="" name="input2" />
 		</fieldset>
+		<fieldset>
+			<label>pass</label>
+			<input type="text" class="" name="userpass" />
+		</fieldset>
 		<div style="margin-top:20px;">
 			<button>Submit</button>
 		</div>
@@ -53,11 +56,21 @@
 </body>
 
 <script>
-$(".test-frm1").valiControl({rules:{
-	input1: {required : true,}
-}});
-$(".test-frm2").valiControl({rules:{
-	input2: {required : true,}
-}});
+$.valiControl.set({rules:{input1:{required:true}}});
+
+$(".test-frm1").valiControl({
+	errorPlacement: function (error, element){
+		element.before(error);
+	},	
+	rules:{
+		input1: {required : true,},
+		input2: {resident_registration_number: true}	
+	}
+});
+$(".test-frm2").valiControl({
+	rules:{
+		input2: {required : true,},
+	}
+});
 </script>
 </html>
