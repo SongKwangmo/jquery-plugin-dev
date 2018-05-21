@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-Language" content="ko" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jQuery Validation Control Demo</title>
+	<meta name="author" content="ChessCat" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="theme-color" content="#ffffff">
+
+	<!-- <link rel="stylesheet" href="/lib/datepicker/css/datepicker.css" media="all"> -->
+	<script type="text/javascript" src="../../resource/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+	
+	<!--
+	<script type="text/javascript" src="../../resource/jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="../../resource/jquery-validation/localization/messages_ko.js"></script>
+-->
+
+	<script type="text/javascript" src="../../dist/jquery-validation-control/jquery.validation.control.js"></script>
+</head>
+<body>
+	<form action="#" class="test-frm1">
+		<fieldset>
+			<label>Input1</label>
+			<input type="text" class="" name="input1" />
+		</fieldset>
+		<fieldset>
+			<label>Input2</label>
+			<input type="text" class="" name="input2" />
+		</fieldset>
+		<div style="margin-top:20px;">
+			<button>Submit</button>
+		</div>
+	</form>
+
+	<br/>
+	<br/>
+
+	<form action="#" class="test-frm2">
+		<fieldset>
+			<label>Input1</label>
+			<input type="text" class="" name="input1" />
+		</fieldset>
+		<fieldset>
+			<label>Input2</label>
+			<input type="text" class="" name="input2" />
+		</fieldset>
+		<div style="margin-top:20px;">
+			<button>Submit</button>
+		</div>
+	</form>
+</body>
+
+<script>
+$(".test-frm1").valiControl({rules:{
+	input1: {required : true,}
+}});
+$(".test-frm2").valiControl({rules:{
+	input2: {required : true,}
+}});
+</script>
+</html>
