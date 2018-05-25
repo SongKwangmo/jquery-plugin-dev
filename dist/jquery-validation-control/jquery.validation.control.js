@@ -4,6 +4,8 @@
 /* jQuery Validation Plugin - v1.17.0 Needed */
 /* https://jqueryvalidation.org */
 
+//TODO:
+//set 메소드를 공통 default 값으로만 저장하는 것이 아닌, 개별 폼에 저장하여 별도의 옵션을 소유하도록 변경 필요.
 
 ;(function($,window,document,undefined){ // 플러그인 코드 작성 부분 	
 
@@ -15,16 +17,40 @@
 				element.after(errObj);
 				console.log(error);
 			},
+			invalidHandler: function(event, validator) {
+				// 'this' refers to the form
+				var errors = validator.numberOfInvalids();
+				if (errors) {
+					var message = errors == 1
+					/*
+					? 'You missed 1 field. It has been highlighted'
+					: 'You missed ' + errors + ' fields. They have been highlighted';
+					*/
+					? '1개의 필드가 잘못 작성되었습니다. 하이라이트 된 항목을 올바르게 작성해주세요.'
+					: errors + '개의 필드가 잘못 작성되었습니다. 하이라이트 된 항목을 올바르게 작성해주세요.';
+
+					if($(this).find(".err-msg").length == 0){
+						$(this).append("<div class='err-msg'></div>");
+					}
+					$(this).find(".err-msg").addClass("is-active");	
+					$(this).find(".err-msg").html(message);
+					console.log("error!");
+
+					console.log(errors);
+				}
+			},
 			rules: {
 				userpass: {
 					required: true,
 					minlength: 8,
-					maxlength: 25,
+					maxlength: 16,
 				},
 				userEmail: {email: true},
 				userRegisNumber : { //주민등록번호
 					resident_registration_number: true
 				},
+			},
+			messages: {
 			},
 			methods: {
 				resident_registration_number: { //주민등록번호 method
@@ -90,16 +116,15 @@
 					}
 				},
 			},
-			messages: {}
+			
 		};
 
 	$[pluginName] = {
 
 		set: function(options){
 			this.setOpt = $.extend({},defaults,options);
-			for(key in this.setOpt){				
-				if(typeof this.setOpt[key] == "object"){
-					console.log(key);
+			for(key in this.setOpt){
+				if(typeof this.setOpt[key] == "object" && options != undefined){
 					this.setOpt[key] = $.extend({},defaults[key],options[key]);
 				}
 			}
@@ -110,16 +135,17 @@
 					$.validator.addMethod(key, mobj[key].action, mobj[key].msg);
 				}
 			}
+			console.log(this.setOpt);
 			console.log("jQuery Validation Setting Complete!");
 		},
 		default: function(element,options){
 			if(typeof $["validator"] == "function"){
 				$el = $(element);
-				var defaults = $[pluginName].setOpt;
-				$el[pluginName].option = $.extend({},defaults,options);
+				var opts = $[pluginName].setOpt;
+				$el[pluginName].option = $.extend({},opts,options);
 				for(key in $el[pluginName].option){
-					if(typeof $el[pluginName].option[key] == "object"){
-						$el[pluginName].option[key] = $.extend({},defaults[key],options[key]);
+					if(typeof $el[pluginName].option[key] == "object" && options != undefined){
+						$el[pluginName].option[key] = $.extend({},opts[key],options[key]);
 					}
 				}
 
@@ -134,9 +160,11 @@
 	}
 
 	$.fn[pluginName] = function(options){
+		/*
 		if(!$[pluginName].setOpt){
-			$[pluginName].set();
-		}		
+			$[pluginName].set();			
+		}
+		*/
 		return this.each(function(idx){
 			console.group(pluginName);
 
@@ -144,6 +172,8 @@
 
 			console.groupEnd();
 		});
-	}	
+	}
+
+	$.valiControl.set();
 
 })(jQuery,window,document);

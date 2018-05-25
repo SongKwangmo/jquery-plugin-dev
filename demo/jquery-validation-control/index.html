@@ -29,7 +29,7 @@
 			<input type="text" class="" name="input2" />
 		</fieldset>
 		<div style="margin-top:20px;">
-			<button>Submit</button>
+			<button type="button" onclick="$('.test-frm1').valid();">Submit</button>
 		</div>
 	</form>
 
@@ -49,14 +49,23 @@
 			<label>pass</label>
 			<input type="text" class="" name="userpass" />
 		</fieldset>
+		<fieldset>
+			<label>testadd</label>
+			<input type="text" class="" name="testadd" id="testadd" />
+		</fieldset>
+		<fieldset>
+			<label>domain</label>
+			<input type="text" class="" name="domain" />
+		</fieldset>
 		<div style="margin-top:20px;">
-			<button>Submit</button>
+			<button type="button" onclick="test();">Submit</button>
 		</div>
 	</form>
 </body>
 
 <script>
 $.valiControl.set({rules:{input1:{required:true}}});
+$("form").valiControl();
 
 $(".test-frm1").valiControl({
 	errorPlacement: function (error, element){
@@ -67,10 +76,18 @@ $(".test-frm1").valiControl({
 		input2: {resident_registration_number: true}	
 	}
 });
+
+
+
 $(".test-frm2").valiControl({
 	rules:{
 		input2: {required : true,},
+		domain: {url:true},
 	}
 });
+
+function test(){
+	$(".test-frm2").valid();
+}
 </script>
 </html>
